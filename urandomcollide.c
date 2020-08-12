@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <sys/reboot.h>
 #include <linux/reboot.h>
+#include <time.h>
 
 //number of bytes to read from /dev/urandom
 //should be <=256 to ensure that "reads of up to 256 bytes will return as many
@@ -15,9 +16,23 @@
 
 //importantLog saved to file, debugLog not saved
 #define importantLog(...) do { printf("[urandomcollide-important] "); printf(__VA_ARGS__); } while(0)
+#ifdef DEBUG
 #define debugLog(...) do { printf("[urandomcollide-debug] "); printf(__VA_ARGS__); } while(0)
+#else
+#define debugLog(...) do {} while(0)
+#endif
 
 int main() {
+
+#ifdef DEBUG
+    debugLog("get time\n");
+    struct timespec time;
+    if (clock_gettime(CLOCK_REALTIME, &time) < 0) {
+        importantLog("error: failed to get time: %s\n", strerror(errno));
+        return 1;
+    }
+    debugLog("seconds since epoch: %ld.%09ld\n", time.tv_sec, time.tv_nsec);
+#endif
 
     debugLog("mount devtmpfs on /dev\n");
 

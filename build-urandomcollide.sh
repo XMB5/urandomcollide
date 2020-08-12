@@ -5,7 +5,7 @@ set -o pipefail
 
 mkdir tmp-build
 cd tmp-build
-cmake ..
+cmake "$@" ..
 make -j"$(nproc)"
 mv urandomcollide ..
 cd ..
