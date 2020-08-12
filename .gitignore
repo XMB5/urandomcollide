@@ -1,4 +1,5 @@
 /.idea
+/cmake-build-debug
 vmlinuz-*
 /urandomcollide
 /urandomcollide-initrd
