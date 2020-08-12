@@ -1,1 +1,4 @@
 /.idea
+vmlinuz-*
+/urandomcollide
+/urandomcollide-initrd
